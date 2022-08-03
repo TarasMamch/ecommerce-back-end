@@ -1,16 +1,26 @@
-// import models
 const Product = require('./Product');
 const Category = require('./Category');
 const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
-// Products belongsTo Category
 
-// Categories have many Products
+Product.belongsTo(Category, {
+  onDelete: "CASCADE",
+  foreignKey: {
+    allowNull: false
+  }
+})
 
-// Products belongToMany Tags (through ProductTag)
+Category.hasMany(Product)
 
-// Tags belongToMany Products (through ProductTag)
+Product.belongsToMany(Tag, { through: 'ProductTag' })
+
+Tag.belongsToMany(Product, { through: 'ProductTag' }, {
+  onDelete: "CASCADE",
+  foreignKey: {
+    allowNull: false
+  }
+})
 
 module.exports = {
   Product,
